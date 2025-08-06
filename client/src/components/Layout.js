@@ -1,19 +1,15 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
 import { 
   Users, 
   Map, 
   Plus, 
-  User, 
-  LogOut, 
   Menu, 
   X,
   Slack
 } from 'lucide-react';
 
 const Layout = ({ children }) => {
-  const { user, logout } = useAuth();
   const location = useLocation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -21,12 +17,7 @@ const Layout = ({ children }) => {
     { name: 'Dashboard', href: '/dashboard', icon: Users },
     { name: 'Relationship Map', href: '/map', icon: Map },
     { name: 'Add Relationships', href: '/add', icon: Plus },
-    { name: 'Profile', href: '/profile', icon: User },
   ];
-
-  const handleLogout = () => {
-    logout();
-  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -67,24 +58,9 @@ const Layout = ({ children }) => {
             })}
           </nav>
           <div className="border-t border-gray-200 p-4">
-            <div className="flex items-center">
-              <img
-                className="h-8 w-8 rounded-full"
-                src={user?.avatar || 'https://via.placeholder.com/32'}
-                alt={user?.displayName}
-              />
-              <div className="ml-3">
-                <p className="text-sm font-medium text-gray-700">{user?.displayName}</p>
-                <p className="text-xs text-gray-500">{user?.email}</p>
-              </div>
+            <div className="text-center text-xs text-gray-500">
+              Relationship Mapping
             </div>
-            <button
-              onClick={handleLogout}
-              className="mt-3 flex w-full items-center px-2 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded-md transition-colors"
-            >
-              <LogOut className="mr-3 h-5 w-5" />
-              Sign out
-            </button>
           </div>
         </div>
       </div>
@@ -116,24 +92,9 @@ const Layout = ({ children }) => {
             })}
           </nav>
           <div className="border-t border-gray-200 p-4">
-            <div className="flex items-center">
-              <img
-                className="h-8 w-8 rounded-full"
-                src={user?.avatar || 'https://via.placeholder.com/32'}
-                alt={user?.displayName}
-              />
-              <div className="ml-3">
-                <p className="text-sm font-medium text-gray-700">{user?.displayName}</p>
-                <p className="text-xs text-gray-500">{user?.email}</p>
-              </div>
+            <div className="text-center text-xs text-gray-500">
+              Relationship Mapping
             </div>
-            <button
-              onClick={handleLogout}
-              className="mt-3 flex w-full items-center px-2 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded-md transition-colors"
-            >
-              <LogOut className="mr-3 h-5 w-5" />
-              Sign out
-            </button>
           </div>
         </div>
       </div>
@@ -167,4 +128,4 @@ const Layout = ({ children }) => {
   );
 };
 
-export default Layout; 
+export default Layout;

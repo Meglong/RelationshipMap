@@ -12,105 +12,53 @@ export const useAuth = () => {
 };
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState({
+    slackUserId: 'U1234567890',
+    slackTeamId: 'T1234567890',
+    email: 'john.doe@company.com',
+    displayName: 'John Doe',
+    realName: 'John Doe',
+    profile: {
+      title: 'Senior Software Engineer',
+      department: 'Engineering',
+      interests: ['coding', 'hiking', 'photography', 'machine learning'],
+      status: 'Available',
+      statusEmoji: ':white_check_mark:',
+      phone: '+1 (555) 123-4567',
+      skype: 'john.doe'
+    },
+    avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face',
+    isAdmin: false,
+    isOwner: false
+  });
   const [loading, setLoading] = useState(true);
-  const [token, setToken] = useState(localStorage.getItem('token'));
+  const [token, setToken] = useState('demo-token');
 
-  // Set up axios defaults
+  // Auto-login with demo user
   useEffect(() => {
-    if (token) {
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      fetchUser();
-    } else {
-      setLoading(false);
-    }
-  }, [token]);
-
-  const fetchUser = async () => {
-    try {
-      // Try demo endpoint first, fallback to regular auth
-      const response = await axios.get('/api/demo/user');
-      setUser(response.data);
-    } catch (error) {
+    const autoLogin = async () => {
       try {
-        const response = await axios.get('/api/auth/me');
-        setUser(response.data);
-      } catch (authError) {
-        console.error('Failed to fetch user:', authError);
-        logout();
+        const response = await axios.post('/api/demo/login');
+        const { token: newToken } = response.data;
+        
+        setToken(newToken);
+        localStorage.setItem('token', newToken);
+        axios.defaults.headers.common['Authorization'] = `Bearer ${newToken}`;
+      } catch (error) {
+        console.error('Auto demo login failed:', error);
+      } finally {
+        setLoading(false);
       }
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const login = async (slackToken) => {
-    try {
-      const response = await axios.post('/api/auth/slack/callback', { token: slackToken });
-      const { token: newToken } = response.data;
-      
-      setToken(newToken);
-      localStorage.setItem('token', newToken);
-      axios.defaults.headers.common['Authorization'] = `Bearer ${newToken}`;
-      
-      await fetchUser();
-      return true;
-    } catch (error) {
-      console.error('Login failed:', error);
-      throw error;
-    }
-  };
-
-  const demoLogin = async () => {
-    try {
-      const response = await axios.post('/api/demo/login');
-      const { token: newToken, user: userData } = response.data;
-      
-      setToken(newToken);
-      localStorage.setItem('token', newToken);
-      axios.defaults.headers.common['Authorization'] = `Bearer ${newToken}`;
-      
-      setUser(userData);
-      return true;
-    } catch (error) {
-      console.error('Demo login failed:', error);
-      throw error;
-    }
-  };
-
-  const logout = () => {
-    setUser(null);
-    setToken(null);
-    localStorage.removeItem('token');
-    delete axios.defaults.headers.common['Authorization'];
-  };
-
-  const refreshToken = async () => {
-    try {
-      const response = await axios.post('/api/auth/refresh');
-      const { token: newToken } = response.data;
-      
-      setToken(newToken);
-      localStorage.setItem('token', newToken);
-      axios.defaults.headers.common['Authorization'] = `Bearer ${newToken}`;
-      
-      return newToken;
-    } catch (error) {
-      console.error('Token refresh failed:', error);
-      logout();
-      throw error;
-    }
-  };
+    };
+    
+    autoLogin();
+  }, []);
 
   const value = {
     user,
     loading,
     token,
-    login,
-    demoLogin,
-    logout,
-    refreshToken,
-    isAuthenticated: !!user,
+    isAuthenticated: true,
   };
 
   return (
