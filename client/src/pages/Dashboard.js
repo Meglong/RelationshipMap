@@ -5,7 +5,6 @@ import { useForm } from 'react-hook-form';
 import { useAuth } from '../contexts/AuthContext';
 import { 
   Users, 
-  Map, 
   Plus, 
   MessageCircle, 
   TrendingUp,
@@ -203,7 +202,7 @@ const Dashboard = () => {
     {
       name: 'Team Members',
       value: relationships?.filter(r => r.relationshipType === 'team_member').length || 0,
-      icon: UserPlus,
+      icon: Users,
       color: 'bg-purple-500',
       href: '/map'
     },
