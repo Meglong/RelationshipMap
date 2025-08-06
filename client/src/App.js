@@ -3,7 +3,6 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from './contexts/AuthContext';
 import Dashboard from './pages/Dashboard';
 import RelationshipMap from './pages/RelationshipMap';
-import AddRelationships from './pages/AddRelationships';
 import Layout from './components/Layout';
 import LoadingSpinner from './components/LoadingSpinner';
 
@@ -24,7 +23,6 @@ function App() {
         <Route path="/" element={<Navigate to="/dashboard" replace />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/map" element={<RelationshipMap />} />
-        <Route path="/add" element={<AddRelationships />} />
         <Route path="*" element={<Navigate to="/dashboard" replace />} />
       </Routes>
     </Layout>

@@ -3,7 +3,6 @@ import { Link, useLocation } from 'react-router-dom';
 import { 
   Users, 
   Map, 
-  Plus, 
   Slack
 } from 'lucide-react';
 
@@ -13,7 +12,6 @@ const Layout = ({ children }) => {
   const navigation = [
     { name: 'Dashboard', href: '/dashboard', icon: Users },
     { name: 'Relationship Map', href: '/map', icon: Map },
-    { name: 'Add Relationships', href: '/add', icon: Plus },
   ];
 
   return (
