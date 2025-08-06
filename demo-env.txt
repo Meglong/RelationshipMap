@@ -1,0 +1,25 @@
+# Demo Environment Configuration
+# Copy this content to a .env file in the root directory
+
+NODE_ENV=development
+PORT=3001
+
+# Mock Slack App Configuration (for demo purposes)
+SLACK_BOT_TOKEN=xoxb-demo-token
+SLACK_SIGNING_SECRET=demo-signing-secret
+SLACK_CLIENT_ID=demo-client-id
+SLACK_CLIENT_SECRET=demo-client-secret
+
+# Database Configuration (using local MongoDB)
+MONGODB_URI=mongodb://localhost:27017/relationship-mapping-demo
+
+# JWT Secret for authentication
+JWT_SECRET=demo-jwt-secret-key-for-prototype
+
+# Slack App URLs
+SLACK_APP_URL=http://localhost:3001
+SLACK_REDIRECT_URI=http://localhost:3001/auth/slack/callback
+
+# Rate Limiting
+RATE_LIMIT_WINDOW_MS=900000
+RATE_LIMIT_MAX_REQUESTS=1000 
