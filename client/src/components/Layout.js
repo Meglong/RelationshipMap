@@ -41,7 +41,7 @@ const Layout = ({ children }) => {
                     className={`group inline-flex items-center px-3 py-2 mx-1 border-b-2 font-medium text-sm transition-all duration-200 rounded-t-md ${
                       isActive
                         ? 'border-[#1264A3] text-[#1D1C1D] bg-transparent'
-                        : 'border-transparent text-[#453337] hover:text-[#1D1C1D] hover:bg-gray-100 hover:border-gray-300'
+                        : 'border-transparent text-[#453337] hover:text-[#1D1C1D] hover:bg-[#4544470f] hover:border-gray-300'
                     }`}
                   >
                     <item.icon className="-ml-0.5 mr-2 h-5 w-5" />
