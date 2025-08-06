@@ -44,9 +44,7 @@ const Layout = ({ children }) => {
                         : 'border-transparent text-[#453337] hover:text-[#1D1C1D] hover:border-gray-300'
                     }`}
                   >
-                    <item.icon className={`-ml-0.5 mr-2 h-5 w-5 ${
-                      isActive ? 'text-[#1264A3]' : 'text-[#453337] group-hover:text-[#1D1C1D]'
-                    }`} />
+                    <item.icon className="-ml-0.5 mr-2 h-5 w-5" />
                     {item.name}
                   </Link>
                 );
