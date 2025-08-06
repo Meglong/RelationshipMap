@@ -217,7 +217,7 @@ const Dashboard = () => {
 
 
 
-  const recentRelationships = relationships?.slice(0, 5) || [];
+
 
   if (isLoading) {
     return (
@@ -609,72 +609,118 @@ const Dashboard = () => {
 
 
 
-      {/* Recent Relationships */}
+      {/* All Relationships */}
       <div className="bg-white rounded-lg shadow-sm border border-gray-200">
         <div className="px-6 py-4 border-b border-gray-200">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-lg font-medium text-gray-900">Recent Relationships</h2>
-              <p className="text-sm text-gray-600">Your most recently added contacts</p>
+              <h2 className="text-lg font-medium text-gray-900">All Relationships</h2>
+              <p className="text-sm text-gray-600">Your complete professional network ({relationships?.length || 0} contacts)</p>
             </div>
             <Link
               to="/map"
-              className="text-sm font-medium text-primary-600 hover:text-primary-500"
+              className="text-sm font-medium text-blue-600 hover:text-blue-500"
             >
-              View all
+              View network map
             </Link>
           </div>
         </div>
         <div className="p-6">
-          {recentRelationships.length > 0 ? (
-            <div className="space-y-4">
-              {recentRelationships.map((relationship) => (
+          {relationships && relationships.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+              {relationships.map((relationship) => (
                 <div
                   key={relationship.id}
-                  className="flex items-center space-x-4 p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200"
+                  className="relative bg-white border border-gray-200 rounded-lg p-4 hover:shadow-md hover:border-gray-300 transition-all duration-200 cursor-pointer"
                 >
-                  <img
-                    className="h-10 w-10 rounded-full"
-                    src={relationship.contact?.avatar || 'https://via.placeholder.com/40'}
-                    alt={relationship.contact?.displayName}
-                  />
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-gray-900 truncate">
-                      {relationship.contact?.displayName}
+                  {/* Profile Image & Status */}
+                  <div className="relative mb-3">
+                    <img
+                      className="w-16 h-16 rounded-lg object-cover mx-auto"
+                      src={relationship.contactId?.avatar || 'https://via.placeholder.com/64'}
+                      alt={relationship.contactId?.displayName}
+                    />
+                    {/* Online Status Indicator */}
+                    <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-green-400 border-2 border-white rounded-full"></div>
+                  </div>
+                  
+                  {/* Name & Title */}
+                  <div className="text-center mb-3">
+                    <h3 className="text-sm font-semibold text-gray-900 truncate">
+                      {relationship.contactId?.displayName}
+                    </h3>
+                    <p className="text-xs text-gray-600 truncate mt-1">
+                      {relationship.contactId?.profile?.title || 'No title'}
                     </p>
-                    <p className="text-sm text-gray-500 truncate">
-                      {relationship.contact?.profile?.title}
+                    <p className="text-xs text-gray-500 truncate">
+                      {relationship.contactId?.profile?.department || ''}
                     </p>
                   </div>
-                  <div className="flex items-center space-x-2">
-                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium relationship-${relationship.relationshipType}`}>
+
+                  {/* Relationship Type Badge */}
+                  <div className="flex justify-center mb-3">
+                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                      relationship.relationshipType === 'manager' ? 'bg-purple-100 text-purple-800' :
+                      relationship.relationshipType === 'direct_report' ? 'bg-blue-100 text-blue-800' :
+                      relationship.relationshipType === 'team_member' ? 'bg-green-100 text-green-800' :
+                      relationship.relationshipType === 'colleague' ? 'bg-gray-100 text-gray-800' :
+                      relationship.relationshipType === 'mentor' ? 'bg-yellow-100 text-yellow-800' :
+                      relationship.relationshipType === 'mentee' ? 'bg-orange-100 text-orange-800' :
+                      'bg-indigo-100 text-indigo-800'
+                    }`}>
                       {relationship.relationshipType.replace('_', ' ')}
                     </span>
-                    {relationship.lastInteraction && (
-                      <span className="text-xs text-gray-400">
-                        {new Date(relationship.lastInteraction).toLocaleDateString()}
-                      </span>
-                    )}
                   </div>
+
+                  {/* Last Interaction */}
+                  <div className="text-center">
+                    <p className="text-xs text-gray-500">
+                      Last interaction:{' '}
+                      {relationship.lastInteraction 
+                        ? (() => {
+                            const date = new Date(relationship.lastInteraction);
+                            const now = new Date();
+                            const diffTime = Math.abs(now - date);
+                            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                            
+                            if (diffDays === 1) return 'Yesterday';
+                            if (diffDays < 7) return `${diffDays} days ago`;
+                            if (diffDays < 30) return `${Math.floor(diffDays / 7)} weeks ago`;
+                            return date.toLocaleDateString();
+                          })()
+                        : 'No recent activity'
+                      }
+                    </p>
+                  </div>
+
+                  {/* Tags */}
+                  {relationship.tags && relationship.tags.length > 0 && (
+                    <div className="mt-2 flex flex-wrap justify-center gap-1">
+                      {relationship.tags.slice(0, 2).map((tag, index) => (
+                        <span
+                          key={index}
+                          className="inline-flex items-center px-2 py-0.5 rounded text-xs bg-gray-100 text-gray-600"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                      {relationship.tags.length > 2 && (
+                        <span className="inline-flex items-center px-2 py-0.5 rounded text-xs bg-gray-100 text-gray-600">
+                          +{relationship.tags.length - 2}
+                        </span>
+                      )}
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
           ) : (
-            <div className="text-center py-8">
-              <Users className="mx-auto h-12 w-12 text-gray-400" />
-              <h3 className="mt-2 text-sm font-medium text-gray-900">No relationships yet</h3>
-              <p className="mt-1 text-sm text-gray-500">
-                Start building your network by adding some contacts.
+            <div className="text-center py-12">
+              <Users className="mx-auto h-16 w-16 text-gray-400" />
+              <h3 className="mt-4 text-lg font-medium text-gray-900">No relationships yet</h3>
+              <p className="mt-2 text-sm text-gray-500">
+                Start building your network by adding your first contact using the tools above.
               </p>
-              <div className="mt-6">
-                <Link
-                  to="/add"
-                  className="btn-primary"
-                >
-                  <Plus className="h-4 w-4 mr-2" />
-                  Add Your First Contact
-                </Link>
-              </div>
             </div>
           )}
         </div>
