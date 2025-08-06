@@ -637,8 +637,11 @@ const Dashboard = () => {
                   <div className="w-full h-48 bg-gray-100">
                     <img
                       className="w-full h-full object-cover"
-                      src={relationship.contactId?.avatar || 'https://via.placeholder.com/300x200'}
-                      alt={relationship.contactId?.displayName}
+                      src={relationship.contact?.avatar || relationship.contactId?.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(relationship.contact?.displayName || relationship.contactId?.displayName || 'User')}&background=6366f1&color=ffffff&size=300`}
+                      alt={relationship.contact?.displayName || relationship.contactId?.displayName || 'Contact'}
+                      onError={(e) => {
+                        e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(relationship.contact?.displayName || relationship.contactId?.displayName || 'User')}&background=6366f1&color=ffffff&size=300`;
+                      }}
                     />
                   </div>
                   
@@ -647,7 +650,7 @@ const Dashboard = () => {
                     {/* Name with Status Indicator */}
                     <div className="flex items-center justify-between mb-1">
                       <h3 className="text-sm font-semibold text-gray-900 truncate flex-1">
-                        {relationship.contactId?.displayName}
+                        {relationship.contact?.displayName || relationship.contactId?.displayName || 'Unknown Contact'}
                       </h3>
                       {/* Small online status indicator */}
                       <div className="w-2 h-2 bg-green-400 rounded-full ml-2 flex-shrink-0"></div>
@@ -655,13 +658,13 @@ const Dashboard = () => {
                     
                     {/* Title */}
                     <p className="text-sm text-gray-600 mb-1 truncate">
-                      {relationship.contactId?.profile?.title || 'No title'}
+                      {relationship.contact?.profile?.title || relationship.contactId?.profile?.title || 'No title'}
                     </p>
                     
                     {/* Department */}
-                    {relationship.contactId?.profile?.department && (
+                    {(relationship.contact?.profile?.department || relationship.contactId?.profile?.department) && (
                       <p className="text-xs text-gray-500 mb-3 truncate">
-                        {relationship.contactId?.profile?.department}
+                        {relationship.contact?.profile?.department || relationship.contactId?.profile?.department}
                       </p>
                     )}
 
