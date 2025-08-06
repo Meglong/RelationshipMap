@@ -40,12 +40,12 @@ const Layout = ({ children }) => {
                     to={item.href}
                     className={`group inline-flex items-center px-1 py-4 border-b-2 font-medium text-sm transition-colors ${
                       isActive
-                        ? 'border-blue-500 text-blue-600'
-                        : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                        ? 'border-[#1264A3] text-[#1D1C1D]'
+                        : 'border-transparent text-[#453337] hover:text-[#1D1C1D] hover:border-gray-300'
                     }`}
                   >
                     <item.icon className={`-ml-0.5 mr-2 h-5 w-5 ${
-                      isActive ? 'text-blue-500' : 'text-gray-400 group-hover:text-gray-500'
+                      isActive ? 'text-[#1264A3]' : 'text-[#453337] group-hover:text-[#1D1C1D]'
                     }`} />
                     {item.name}
                   </Link>
