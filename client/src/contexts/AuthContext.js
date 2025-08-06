@@ -12,7 +12,7 @@ export const useAuth = () => {
 };
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState({
+  const [user] = useState({
     slackUserId: 'U1234567890',
     slackTeamId: 'T1234567890',
     email: 'john.doe@company.com',
