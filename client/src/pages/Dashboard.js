@@ -631,51 +631,57 @@ const Dashboard = () => {
               {relationships.map((relationship) => (
                 <div
                   key={relationship.id}
-                  className="relative bg-white border border-gray-200 rounded-lg p-4 hover:shadow-md hover:border-gray-300 transition-all duration-200 cursor-pointer"
+                  className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-md hover:border-gray-300 transition-all duration-200 cursor-pointer"
                 >
-                  {/* Profile Image & Status */}
-                  <div className="relative mb-3">
+                  {/* Full-width Profile Image */}
+                  <div className="w-full h-48 bg-gray-100">
                     <img
-                      className="w-16 h-16 rounded-lg object-cover mx-auto"
-                      src={relationship.contactId?.avatar || 'https://via.placeholder.com/64'}
+                      className="w-full h-full object-cover"
+                      src={relationship.contactId?.avatar || 'https://via.placeholder.com/300x200'}
                       alt={relationship.contactId?.displayName}
                     />
-                    {/* Online Status Indicator */}
-                    <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-green-400 border-2 border-white rounded-full"></div>
                   </div>
                   
-                  {/* Name & Title */}
-                  <div className="text-center mb-3">
-                    <h3 className="text-sm font-semibold text-gray-900 truncate">
-                      {relationship.contactId?.displayName}
-                    </h3>
-                    <p className="text-xs text-gray-600 truncate mt-1">
+                  {/* Card Content */}
+                  <div className="p-4">
+                    {/* Name with Status Indicator */}
+                    <div className="flex items-center justify-between mb-1">
+                      <h3 className="text-sm font-semibold text-gray-900 truncate flex-1">
+                        {relationship.contactId?.displayName}
+                      </h3>
+                      {/* Small online status indicator */}
+                      <div className="w-2 h-2 bg-green-400 rounded-full ml-2 flex-shrink-0"></div>
+                    </div>
+                    
+                    {/* Title */}
+                    <p className="text-sm text-gray-600 mb-1 truncate">
                       {relationship.contactId?.profile?.title || 'No title'}
                     </p>
-                    <p className="text-xs text-gray-500 truncate">
-                      {relationship.contactId?.profile?.department || ''}
-                    </p>
-                  </div>
+                    
+                    {/* Department */}
+                    {relationship.contactId?.profile?.department && (
+                      <p className="text-xs text-gray-500 mb-3 truncate">
+                        {relationship.contactId?.profile?.department}
+                      </p>
+                    )}
 
-                  {/* Relationship Type Badge */}
-                  <div className="flex justify-center mb-3">
-                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                      relationship.relationshipType === 'manager' ? 'bg-purple-100 text-purple-800' :
-                      relationship.relationshipType === 'direct_report' ? 'bg-blue-100 text-blue-800' :
-                      relationship.relationshipType === 'team_member' ? 'bg-green-100 text-green-800' :
-                      relationship.relationshipType === 'colleague' ? 'bg-gray-100 text-gray-800' :
-                      relationship.relationshipType === 'mentor' ? 'bg-yellow-100 text-yellow-800' :
-                      relationship.relationshipType === 'mentee' ? 'bg-orange-100 text-orange-800' :
-                      'bg-indigo-100 text-indigo-800'
-                    }`}>
-                      {relationship.relationshipType.replace('_', ' ')}
-                    </span>
-                  </div>
+                    {/* Relationship Type Badge */}
+                    <div className="mb-2">
+                      <span className={`inline-flex items-center px-2 py-1 rounded text-xs font-medium ${
+                        relationship.relationshipType === 'manager' ? 'bg-purple-100 text-purple-800' :
+                        relationship.relationshipType === 'direct_report' ? 'bg-blue-100 text-blue-800' :
+                        relationship.relationshipType === 'team_member' ? 'bg-green-100 text-green-800' :
+                        relationship.relationshipType === 'colleague' ? 'bg-gray-100 text-gray-800' :
+                        relationship.relationshipType === 'mentor' ? 'bg-yellow-100 text-yellow-800' :
+                        relationship.relationshipType === 'mentee' ? 'bg-orange-100 text-orange-800' :
+                        'bg-indigo-100 text-indigo-800'
+                      }`}>
+                        {relationship.relationshipType.replace('_', ' ')}
+                      </span>
+                    </div>
 
-                  {/* Last Interaction */}
-                  <div className="text-center">
-                    <p className="text-xs text-gray-500">
-                      Last interaction:{' '}
+                    {/* Last Interaction */}
+                    <p className="text-xs text-gray-500 mb-2">
                       {relationship.lastInteraction 
                         ? (() => {
                             const date = new Date(relationship.lastInteraction);
@@ -683,34 +689,34 @@ const Dashboard = () => {
                             const diffTime = Math.abs(now - date);
                             const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
                             
-                            if (diffDays === 1) return 'Yesterday';
-                            if (diffDays < 7) return `${diffDays} days ago`;
-                            if (diffDays < 30) return `${Math.floor(diffDays / 7)} weeks ago`;
-                            return date.toLocaleDateString();
+                            if (diffDays === 1) return 'Active yesterday';
+                            if (diffDays < 7) return `Active ${diffDays} days ago`;
+                            if (diffDays < 30) return `Active ${Math.floor(diffDays / 7)} weeks ago`;
+                            return `Last active ${date.toLocaleDateString()}`;
                           })()
                         : 'No recent activity'
                       }
                     </p>
-                  </div>
 
-                  {/* Tags */}
-                  {relationship.tags && relationship.tags.length > 0 && (
-                    <div className="mt-2 flex flex-wrap justify-center gap-1">
-                      {relationship.tags.slice(0, 2).map((tag, index) => (
-                        <span
-                          key={index}
-                          className="inline-flex items-center px-2 py-0.5 rounded text-xs bg-gray-100 text-gray-600"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                      {relationship.tags.length > 2 && (
-                        <span className="inline-flex items-center px-2 py-0.5 rounded text-xs bg-gray-100 text-gray-600">
-                          +{relationship.tags.length - 2}
-                        </span>
-                      )}
-                    </div>
-                  )}
+                    {/* Tags */}
+                    {relationship.tags && relationship.tags.length > 0 && (
+                      <div className="flex flex-wrap gap-1">
+                        {relationship.tags.slice(0, 3).map((tag, index) => (
+                          <span
+                            key={index}
+                            className="inline-flex items-center px-2 py-0.5 rounded text-xs bg-gray-100 text-gray-600"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                        {relationship.tags.length > 3 && (
+                          <span className="inline-flex items-center px-2 py-0.5 rounded text-xs bg-gray-100 text-gray-600">
+                            +{relationship.tags.length - 3}
+                          </span>
+                        )}
+                      </div>
+                    )}
+                  </div>
                 </div>
               ))}
             </div>
