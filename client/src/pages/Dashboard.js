@@ -627,14 +627,14 @@ const Dashboard = () => {
         </div>
         <div className="p-6">
           {relationships && relationships.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4">
               {relationships.map((relationship) => (
                 <div
                   key={relationship.id}
                   className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-md hover:border-gray-300 transition-all duration-200 cursor-pointer"
                 >
-                  {/* Full-width Profile Image */}
-                  <div className="w-full h-48 bg-gray-100">
+                  {/* Square Profile Image */}
+                  <div className="w-full aspect-square bg-gray-100">
                     <img
                       className="w-full h-full object-cover"
                       src={relationship.contact?.avatar || relationship.contactId?.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(relationship.contact?.displayName || relationship.contactId?.displayName || 'User')}&background=6366f1&color=ffffff&size=300`}
