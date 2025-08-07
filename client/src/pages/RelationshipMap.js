@@ -367,12 +367,17 @@ const RelationshipMap = () => {
             nodeVal={getNodeSize}
             linkColor={getLinkColor}
             linkWidth={getLinkWidth}
-            linkDistance={getLinkDistance}
             linkOpacity={0.6}
             onNodeClick={handleNodeClick}
             onNodeHover={handleNodeHover}
             onNodeUnhover={handleNodeUnhover}
             cooldownTicks={100}
+            d3Force={{
+              link: {
+                distance: getLinkDistance,
+                strength: 0.5
+              }
+            }}
             nodeCanvasObject={(node, ctx, globalScale) => {
               if (!node || !node.name || !ctx) return;
               
