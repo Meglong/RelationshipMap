@@ -475,7 +475,7 @@ const demoRelationships = [
     sharedInterests: ['user experience'],
     notes: 'Works on UI/UX for our features. Great design sense and attention to detail.',
     tags: ['design', 'team', 'ui-ux'],
-    lastInteraction: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000), // 1 day ago
+    lastInteraction: new Date(Date.now() - 90 * 24 * 60 * 60 * 1000), // 3 months ago (medium weight)
     interactionCount: 8
   },
   {
@@ -587,7 +587,7 @@ const demoRelationships = [
     sharedInterests: ['coffee'],
     notes: 'QA engineer on our team. Ensures our features are thoroughly tested before release.',
     tags: ['qa', 'testing', 'team'],
-    lastInteraction: new Date(Date.now() - 9 * 24 * 60 * 60 * 1000), // 9 days ago
+    lastInteraction: new Date(Date.now() - 300 * 24 * 60 * 60 * 1000), // 10 months ago (light weight)
     interactionCount: 11
   },
   {
@@ -619,7 +619,7 @@ const demoRelationships = [
     sharedInterests: ['user interface'],
     notes: 'UI designer. We work together on visual design and user interface improvements.',
     tags: ['design', 'ui', 'visual'],
-    lastInteraction: new Date(Date.now() - 11 * 24 * 60 * 60 * 1000), // 11 days ago
+    lastInteraction: new Date(Date.now() - 150 * 24 * 60 * 60 * 1000), // 5 months ago (medium weight)
     interactionCount: 7
   },
   {
@@ -651,7 +651,7 @@ const demoRelationships = [
     sharedInterests: ['communication'],
     notes: 'Customer Success Manager. We work together on customer feedback and feature requests.',
     tags: ['customer-success', 'feedback', 'communication'],
-    lastInteraction: new Date(Date.now() - 13 * 24 * 60 * 60 * 1000), // 13 days ago
+    lastInteraction: new Date(Date.now() - 450 * 24 * 60 * 60 * 1000), // 15 months ago (light weight)
     interactionCount: 6
   },
   {
@@ -683,7 +683,7 @@ const demoRelationships = [
     sharedInterests: ['data analysis'],
     notes: 'Business Analyst. We work together on requirements gathering and data analysis.',
     tags: ['business-analysis', 'requirements', 'data'],
-    lastInteraction: new Date(Date.now() - 15 * 24 * 60 * 60 * 1000), // 15 days ago
+    lastInteraction: new Date(Date.now() - 60 * 24 * 60 * 60 * 1000), // 2 months ago (medium weight)
     interactionCount: 10
   },
   {
@@ -715,7 +715,7 @@ const demoRelationships = [
     sharedInterests: ['brand voice'],
     notes: 'Content Strategist. We work together on product messaging and brand voice.',
     tags: ['content', 'marketing', 'brand'],
-    lastInteraction: new Date(Date.now() - 17 * 24 * 60 * 60 * 1000), // 17 days ago
+    lastInteraction: new Date(Date.now() - 720 * 24 * 60 * 60 * 1000), // 2 years ago (light weight)
     interactionCount: 4
   },
   {
