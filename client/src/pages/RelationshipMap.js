@@ -202,17 +202,29 @@ const RelationshipMap = () => {
       return contact.slackUserId === link.target;
     });
     
-    if (!relationship || !relationship.lastInteraction) return 1;
+    if (!relationship || !relationship.lastInteraction) {
+      console.log('No relationship or lastInteraction found for link:', link.target);
+      return 1;
+    }
     
     const lastInteraction = new Date(relationship.lastInteraction);
     const now = new Date();
     const daysDiff = (now - lastInteraction) / (1000 * 60 * 60 * 24);
     
+    console.log(`Link ${link.target}: lastInteraction=${lastInteraction}, daysDiff=${daysDiff}`);
+    
     // Heavy weight: within last month (30 days)
-    if (daysDiff <= 30) return 4;
+    if (daysDiff <= 30) {
+      console.log(`Heavy weight for ${link.target}`);
+      return 4;
+    }
     // Medium weight: within last 6 months (180 days)
-    if (daysDiff <= 180) return 2;
+    if (daysDiff <= 180) {
+      console.log(`Medium weight for ${link.target}`);
+      return 2;
+    }
     // Light weight: older than 6 months
+    console.log(`Light weight for ${link.target}`);
     return 1;
   };
 
