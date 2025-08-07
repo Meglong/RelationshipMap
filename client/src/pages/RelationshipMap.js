@@ -1,10 +1,9 @@
 import React, { useState, useRef, useCallback } from 'react';
 import { useQuery } from 'react-query';
 import ForceGraph2D from 'react-force-graph-2d';
-import { Users, MessageCircle, Calendar, Tag, X } from 'lucide-react';
+import { MessageCircle, Tag, X } from 'lucide-react';
 import axios from 'axios';
 import LoadingSpinner from '../components/LoadingSpinner';
-import toast from 'react-hot-toast';
 
 const RelationshipMap = () => {
   const [selectedNode, setSelectedNode] = useState(null);
@@ -18,7 +17,7 @@ const RelationshipMap = () => {
   
   const fgRef = useRef();
 
-  const { data: relationships, isLoading, refetch } = useQuery(
+  const { data: relationships, isLoading } = useQuery(
     'relationships',
     async () => {
       const response = await axios.get('/api/relationships/map');
@@ -125,16 +124,6 @@ const RelationshipMap = () => {
 
   const handleNodeUnhover = useCallback(() => {
     setHoveredNode(null);
-  }, []);
-
-  const handleLinkHover = useCallback((link) => {
-    if (!link || !fgRef.current) return;
-    fgRef.current.setLinkColor(link, '#3B82F6');
-  }, []);
-
-  const handleLinkUnhover = useCallback((link) => {
-    if (!link || !fgRef.current) return;
-    fgRef.current.setLinkColor(link, '#94A3B8');
   }, []);
 
   const getNodeColor = (node) => {
@@ -270,8 +259,6 @@ const RelationshipMap = () => {
             onNodeClick={handleNodeClick}
             onNodeHover={handleNodeHover}
             onNodeUnhover={handleNodeUnhover}
-            onLinkHover={handleLinkHover}
-            onLinkUnhover={handleLinkUnhover}
             cooldownTicks={100}
             nodeCanvasObject={(node, ctx, globalScale) => {
               if (!node || !node.name || !ctx) return;
