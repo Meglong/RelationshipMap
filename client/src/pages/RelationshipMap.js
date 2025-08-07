@@ -118,35 +118,34 @@ const RelationshipMap = () => {
     if (!node || node.isCenter) return;
     setHoveredNode(node);
     
-    // Use node position instead of mouse position for better positioning
-    if (node.x !== undefined && node.y !== undefined && fgRef.current) {
-      try {
-        // Get the canvas element and its bounding rect
-        const canvas = fgRef.current.renderer().domElement;
-        const rect = canvas.getBoundingClientRect();
-        
-        // Convert node coordinates to screen coordinates
-        const screenX = rect.left + node.x + canvas.width / 2;
-        const screenY = rect.top + node.y + canvas.height / 2;
-        
-        // Ensure the hover card stays within viewport bounds
-        const cardWidth = 300; // max-w-xs is approximately 300px
-        const cardHeight = 200; // estimated height
-        const padding = 10;
-        
-        const adjustedX = Math.max(padding, Math.min(window.innerWidth - cardWidth - padding, screenX - cardWidth / 2));
-        const adjustedY = Math.max(padding, Math.min(window.innerHeight - cardHeight - padding, screenY + 30));
-        
-        setHoverPosition({ x: adjustedX, y: adjustedY });
-      } catch (error) {
-        // Fallback to mouse position if there's any error
-        if (event && event.clientX !== undefined && event.clientY !== undefined) {
-          setHoverPosition({ x: event.clientX, y: event.clientY });
-        }
+    console.log('Node hover:', { node: node.name, event, clientX: event?.clientX, clientY: event?.clientY });
+    
+    // Use mouse position as it's more reliable for positioning
+    if (event && event.clientX !== undefined && event.clientY !== undefined) {
+      // Position the card to the right and slightly below the cursor
+      const cardWidth = 300; // max-w-xs is approximately 300px
+      const cardHeight = 200; // estimated height
+      const padding = 10;
+      
+      let x = event.clientX + 15; // Offset to the right of cursor
+      let y = event.clientY + 10; // Offset below cursor
+      
+      // Ensure the hover card stays within viewport bounds
+      if (x + cardWidth > window.innerWidth - padding) {
+        x = event.clientX - cardWidth - 15; // Show to the left instead
       }
-    } else if (event && event.clientX !== undefined && event.clientY !== undefined) {
-      // Fallback to mouse position if node coordinates aren't available
-      setHoverPosition({ x: event.clientX, y: event.clientY });
+      if (y + cardHeight > window.innerHeight - padding) {
+        y = event.clientY - cardHeight - 10; // Show above instead
+      }
+      
+      // Ensure minimum padding from edges
+      x = Math.max(padding, x);
+      y = Math.max(padding, y);
+      
+      console.log('Setting hover position:', { x, y });
+      setHoverPosition({ x, y });
+    } else {
+      console.log('No valid event coordinates');
     }
   }, []);
 
