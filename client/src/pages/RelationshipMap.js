@@ -198,29 +198,17 @@ const RelationshipMap = () => {
     
     // The target is the node object itself, which contains lastInteraction
     const targetNode = link.target;
-    if (!targetNode || !targetNode.lastInteraction) {
-      console.log('No lastInteraction found for link target:', targetNode?.name || 'unknown');
-      return 1;
-    }
+    if (!targetNode || !targetNode.lastInteraction) return 1;
     
     const lastInteraction = new Date(targetNode.lastInteraction);
     const now = new Date();
     const daysDiff = (now - lastInteraction) / (1000 * 60 * 60 * 24);
     
-    console.log(`Link ${targetNode.name}: lastInteraction=${lastInteraction}, daysDiff=${daysDiff}`);
-    
     // Heavy weight: within last month (30 days)
-    if (daysDiff <= 30) {
-      console.log(`Heavy weight for ${targetNode.name}`);
-      return 4;
-    }
+    if (daysDiff <= 30) return 4;
     // Medium weight: within last 6 months (180 days)
-    if (daysDiff <= 180) {
-      console.log(`Medium weight for ${targetNode.name}`);
-      return 2;
-    }
+    if (daysDiff <= 180) return 2;
     // Light weight: older than 6 months
-    console.log(`Light weight for ${targetNode.name}`);
     return 1;
   };
 
@@ -242,6 +230,26 @@ const RelationshipMap = () => {
     if (daysDiff <= 180) return '#3B82F6';
     // Weak connection: older than 6 months (light gray)
     return '#94A3B8';
+  };
+
+  // Function to get link distance based on interaction recency
+  const getLinkDistance = (link) => {
+    if (!link || !link.source || !link.target) return 200;
+    
+    // The target is the node object itself, which contains lastInteraction
+    const targetNode = link.target;
+    if (!targetNode || !targetNode.lastInteraction) return 300;
+    
+    const lastInteraction = new Date(targetNode.lastInteraction);
+    const now = new Date();
+    const daysDiff = (now - lastInteraction) / (1000 * 60 * 60 * 24);
+    
+    // Recent interactions: closer to center (shorter links)
+    if (daysDiff <= 30) return 120;
+    // Medium interactions: medium distance
+    if (daysDiff <= 180) return 200;
+    // Old interactions: farther from center (longer links)
+    return 300;
   };
 
   const formatDate = (dateString) => {
@@ -359,6 +367,7 @@ const RelationshipMap = () => {
             nodeVal={getNodeSize}
             linkColor={getLinkColor}
             linkWidth={getLinkWidth}
+            linkDistance={getLinkDistance}
             linkOpacity={0.6}
             onNodeClick={handleNodeClick}
             onNodeHover={handleNodeHover}
