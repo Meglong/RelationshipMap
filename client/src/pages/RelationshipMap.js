@@ -288,7 +288,7 @@ const RelationshipMap = () => {
 
       {/* Graph Container */}
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
-        <div className="h-96 w-full">
+        <div style={{ height: '900px' }} className="w-full">
           <ForceGraph2D
             ref={fgRef}
             graphData={filteredGraphData}
