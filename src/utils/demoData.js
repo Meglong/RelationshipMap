@@ -491,7 +491,7 @@ const demoRelationships = [
     sharedInterests: ['machine learning', 'python'],
     notes: 'Mentors me on data analysis and ML projects. Helped me understand complex algorithms.',
     tags: ['mentor', 'data', 'ml', 'learning'],
-    lastInteraction: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000), // 5 days ago
+    lastInteraction: new Date(Date.now() - 45 * 24 * 60 * 60 * 1000), // 45 days ago (medium weight)
     interactionCount: 25
   },
   {
@@ -539,7 +539,7 @@ const demoRelationships = [
     sharedInterests: ['system design'],
     notes: 'Backend developer. We work together on API design and database schemas.',
     tags: ['backend', 'api', 'database'],
-    lastInteraction: new Date(Date.now() - 6 * 24 * 60 * 60 * 1000), // 6 days ago
+    lastInteraction: new Date(Date.now() - 120 * 24 * 60 * 60 * 1000), // 4 months ago (medium weight)
     interactionCount: 22
   },
   {
@@ -555,7 +555,7 @@ const demoRelationships = [
     sharedInterests: ['analytics'],
     notes: 'Marketing manager. We collaborate on tracking user behavior and analytics implementation.',
     tags: ['marketing', 'analytics', 'cross-functional'],
-    lastInteraction: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000), // 7 days ago
+    lastInteraction: new Date(Date.now() - 240 * 24 * 60 * 60 * 1000), // 8 months ago (light weight)
     interactionCount: 9
   },
   {
@@ -571,7 +571,7 @@ const demoRelationships = [
     sharedInterests: ['automation'],
     notes: 'DevOps engineer. Helps with deployment automation and infrastructure setup.',
     tags: ['devops', 'infrastructure', 'automation'],
-    lastInteraction: new Date(Date.now() - 8 * 24 * 60 * 60 * 1000), // 8 days ago
+    lastInteraction: new Date(Date.now() - 400 * 24 * 60 * 60 * 1000), // 13 months ago (light weight)
     interactionCount: 14
   },
   {
@@ -603,7 +603,7 @@ const demoRelationships = [
     sharedInterests: ['product strategy', 'data analysis'],
     notes: 'Senior PM who mentors me on product thinking and user-centered design.',
     tags: ['mentor', 'product', 'strategy'],
-    lastInteraction: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000), // 10 days ago
+    lastInteraction: new Date(Date.now() - 600 * 24 * 60 * 60 * 1000), // 20 months ago (light weight)
     interactionCount: 16
   },
   {

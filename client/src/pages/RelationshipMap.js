@@ -245,7 +245,7 @@ const RelationshipMap = () => {
   };
 
   const formatDate = (dateString) => {
-    if (!dateString) return 'No recent interaction';
+    if (!dateString) return 'No interaction recorded';
     const date = new Date(dateString);
     const now = new Date();
     const diffTime = Math.abs(now - date);
@@ -254,6 +254,16 @@ const RelationshipMap = () => {
     if (diffDays === 1) return 'Yesterday';
     if (diffDays < 7) return `${diffDays} days ago`;
     if (diffDays < 30) return `${Math.floor(diffDays / 7)} weeks ago`;
+    if (diffDays < 90) return `${Math.floor(diffDays / 30)} months ago`;
+    if (diffDays < 365) return `${Math.floor(diffDays / 30)} months ago`;
+    
+    const years = Math.floor(diffDays / 365);
+    const remainingMonths = Math.floor((diffDays % 365) / 30);
+    
+    if (years >= 2) return `${years} years ago`;
+    if (years === 1 && remainingMonths >= 6) return `1.5 years ago`;
+    if (years === 1) return `1 year ago`;
+    
     return `${Math.floor(diffDays / 30)} months ago`;
   };
 
