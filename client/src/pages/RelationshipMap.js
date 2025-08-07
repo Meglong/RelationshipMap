@@ -196,9 +196,9 @@ const RelationshipMap = () => {
     
     const colors = {
       team_member: '#FF7F7F', // Coral color
-      direct_report: '#10B981', // Green
+      direct_report: '#3B82F6', // Blue
       manager: '#8B5CF6', // Purple
-      colleague: '#6B7280', // Gray
+      colleague: '#10B981', // Green
       leader: '#F59E0B', // Orange/Yellow
       mentee: '#F97316', // Orange
       friend: '#EC4899', // Pink
