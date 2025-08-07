@@ -111,12 +111,12 @@ const RelationshipMap = () => {
   }, [graphData, filters]);
 
   const handleNodeClick = useCallback((node) => {
-    if (node.isCenter) return;
+    if (!node || node.isCenter) return;
     setSelectedNode(node);
   }, []);
 
   const handleNodeHover = useCallback((node, event) => {
-    if (node.isCenter) return;
+    if (!node || node.isCenter) return;
     setHoveredNode(node);
     if (event && event.clientX !== undefined && event.clientY !== undefined) {
       setHoverPosition({ x: event.clientX, y: event.clientY });
@@ -128,14 +128,17 @@ const RelationshipMap = () => {
   }, []);
 
   const handleLinkHover = useCallback((link) => {
+    if (!link || !fgRef.current) return;
     fgRef.current.setLinkColor(link, '#3B82F6');
   }, []);
 
   const handleLinkUnhover = useCallback((link) => {
+    if (!link || !fgRef.current) return;
     fgRef.current.setLinkColor(link, '#94A3B8');
   }, []);
 
   const getNodeColor = (node) => {
+    if (!node) return '#6B7280';
     if (node.isCenter) return '#4A154B';
     
     const colors = {
@@ -153,6 +156,7 @@ const RelationshipMap = () => {
   };
 
   const getNodeSize = (node) => {
+    if (!node) return 4;
     if (node.isCenter) return 8;
     return node.interactionCount > 10 ? 6 : 4;
   };
@@ -257,7 +261,7 @@ const RelationshipMap = () => {
           <ForceGraph2D
             ref={fgRef}
             graphData={filteredGraphData}
-            nodeLabel={(node) => node.name}
+            nodeLabel={(node) => node ? node.name : ''}
             nodeColor={getNodeColor}
             nodeVal={getNodeSize}
             linkColor="#94A3B8"
@@ -270,6 +274,8 @@ const RelationshipMap = () => {
             onLinkUnhover={handleLinkUnhover}
             cooldownTicks={100}
             nodeCanvasObject={(node, ctx, globalScale) => {
+              if (!node || !node.name || !ctx) return;
+              
               const label = node.name;
               const fontSize = 12/globalScale;
               ctx.font = `${fontSize}px Inter`;
