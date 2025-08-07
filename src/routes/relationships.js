@@ -24,12 +24,9 @@ router.get('/map', async (req, res) => {
     // Get interaction data for each relationship
     const relationshipsWithData = await Promise.all(
       relationships.map(async (rel) => {
-        const lastInteraction = await inMemoryStore.findInteractions({
-          userId,
-          contactId: rel.contactId.slackUserId
-        }).then(interactions => 
-          interactions.sort((a, b) => new Date(b.messageTimestamp) - new Date(a.messageTimestamp))[0]
-        );
+        // Use the relationship's lastInteraction field for demo purposes
+        // In production, this would fetch from the interactions collection
+        const lastInteraction = rel.lastInteraction;
 
         const sharedChannels = rel.sharedChannels || [];
         
@@ -39,7 +36,7 @@ router.get('/map', async (req, res) => {
           relationshipType: rel.relationshipType,
           customRelationshipType: rel.customRelationshipType,
           addedVia: rel.addedVia,
-          lastInteraction: lastInteraction?.messageTimestamp,
+          lastInteraction: lastInteraction,
           interactionCount: rel.interactionCount,
           sharedChannels,
           sharedInterests: rel.sharedInterests,
