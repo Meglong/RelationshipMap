@@ -18,7 +18,7 @@ const demoUsers = [
       phone: '+1 (555) 123-4567',
       skype: 'john.doe'
     },
-    avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face',
+    avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&h=300&fit=crop&crop=face',
     isAdmin: false,
     isOwner: false,
     isBot: false,
@@ -40,7 +40,7 @@ const demoUsers = [
       phone: '+1 (555) 123-4568',
       skype: 'sarah.smith'
     },
-    avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face',
+    avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=300&h=300&fit=crop&crop=face',
     isAdmin: false,
     isOwner: false,
     isBot: false,
@@ -62,7 +62,7 @@ const demoUsers = [
       phone: '+1 (555) 123-4569',
       skype: 'mike.johnson'
     },
-    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face',
+    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=300&fit=crop&crop=face',
     isAdmin: false,
     isOwner: false,
     isBot: false,
@@ -84,7 +84,7 @@ const demoUsers = [
       phone: '+1 (555) 123-4570',
       skype: 'lisa.wang'
     },
-    avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face',
+    avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=300&h=300&fit=crop&crop=face',
     isAdmin: false,
     isOwner: false,
     isBot: false,
@@ -106,7 +106,7 @@ const demoUsers = [
       phone: '+1 (555) 123-4571',
       skype: 'david.brown'
     },
-    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face',
+    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300&h=300&fit=crop&crop=face',
     isAdmin: true,
     isOwner: false,
     isBot: false,
@@ -128,7 +128,7 @@ const demoUsers = [
       phone: '+1 (555) 123-4572',
       skype: 'emma.wilson'
     },
-    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&h=150&fit=crop&crop=face',
+    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&h=300&fit=crop&crop=face',
     isAdmin: false,
     isOwner: false,
     isBot: false,
@@ -150,7 +150,7 @@ const demoUsers = [
       phone: '+1 (555) 123-4573',
       skype: 'alex.chen'
     },
-    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face',
+    avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=300&h=300&fit=crop&crop=face',
     isAdmin: false,
     isOwner: false,
     isBot: false,
@@ -172,7 +172,7 @@ const demoUsers = [
       phone: '+1 (555) 123-4574',
       skype: 'maria.garcia'
     },
-    avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face',
+    avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=300&h=300&fit=crop&crop=face',
     isAdmin: false,
     isOwner: false,
     isBot: false,
@@ -194,7 +194,7 @@ const demoUsers = [
       phone: '+1 (555) 123-4575',
       skype: 'james.taylor'
     },
-    avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face',
+    avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=300&h=300&fit=crop&crop=face',
     isAdmin: false,
     isOwner: false,
     isBot: false,
@@ -216,7 +216,7 @@ const demoUsers = [
       phone: '+1 (555) 123-4576',
       skype: 'sophie.anderson'
     },
-    avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face',
+    avatar: 'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=300&h=300&fit=crop&crop=face',
     isAdmin: false,
     isOwner: false,
     isBot: false,
@@ -238,7 +238,7 @@ const demoUsers = [
       phone: '+1 (555) 123-4577',
       skype: 'robert.lee'
     },
-    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face',
+    avatar: 'https://images.unsplash.com/photo-1527980965255-d3b416303d12?w=300&h=300&fit=crop&crop=face',
     isAdmin: false,
     isOwner: false,
     isBot: false,
@@ -260,7 +260,7 @@ const demoUsers = [
       phone: '+1 (555) 123-4578',
       skype: 'anna.kim'
     },
-    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&h=150&fit=crop&crop=face',
+    avatar: 'https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?w=300&h=300&fit=crop&crop=face',
     isAdmin: false,
     isOwner: false,
     isBot: false,
@@ -282,7 +282,7 @@ const demoUsers = [
       phone: '+1 (555) 123-4579',
       skype: 'thomas.white'
     },
-    avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face',
+    avatar: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=300&h=300&fit=crop&crop=face',
     isAdmin: false,
     isOwner: false,
     isBot: false,
@@ -304,7 +304,7 @@ const demoUsers = [
       phone: '+1 (555) 123-4580',
       skype: 'jessica.martinez'
     },
-    avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face',
+    avatar: 'https://images.unsplash.com/photo-1520813792240-56fc4a3765a7?w=300&h=300&fit=crop&crop=face',
     isAdmin: false,
     isOwner: false,
     isBot: false,
@@ -326,7 +326,7 @@ const demoUsers = [
       phone: '+1 (555) 123-4581',
       skype: 'daniel.clark'
     },
-    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face',
+    avatar: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=300&h=300&fit=crop&crop=face',
     isAdmin: false,
     isOwner: false,
     isBot: false,
@@ -348,7 +348,7 @@ const demoUsers = [
       phone: '+1 (555) 123-4582',
       skype: 'rachel.green'
     },
-    avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face',
+    avatar: 'https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=300&h=300&fit=crop&crop=face',
     isAdmin: false,
     isOwner: false,
     isBot: false,
@@ -370,7 +370,7 @@ const demoUsers = [
       phone: '+1 (555) 123-4583',
       skype: 'kevin.rodriguez'
     },
-    avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face',
+    avatar: 'https://images.unsplash.com/photo-1542909168-82c3e7fdca5c?w=300&h=300&fit=crop&crop=face',
     isAdmin: false,
     isOwner: false,
     isBot: false,
@@ -392,7 +392,7 @@ const demoUsers = [
       phone: '+1 (555) 123-4584',
       skype: 'amanda.foster'
     },
-    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&h=150&fit=crop&crop=face',
+    avatar: 'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=300&h=300&fit=crop&crop=face',
     isAdmin: false,
     isOwner: false,
     isBot: false,
@@ -414,7 +414,7 @@ const demoUsers = [
       phone: '+1 (555) 123-4585',
       skype: 'michael.thompson'
     },
-    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face',
+    avatar: 'https://images.unsplash.com/photo-1552374196-c4e7ffc6e126?w=300&h=300&fit=crop&crop=face',
     isAdmin: false,
     isOwner: false,
     isBot: false,
@@ -436,7 +436,7 @@ const demoUsers = [
       phone: '+1 (555) 123-4586',
       skype: 'laura.davis'
     },
-    avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face',
+    avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=300&h=300&fit=crop&crop=face',
     isAdmin: false,
     isOwner: false,
     isBot: false,
