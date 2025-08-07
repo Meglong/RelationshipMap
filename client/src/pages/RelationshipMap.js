@@ -33,23 +33,26 @@ const RelationshipMap = () => {
   const graphData = React.useMemo(() => {
     if (!relationships) return { nodes: [], links: [] };
 
-    const nodes = relationships.map(rel => ({
-      id: rel.contact.slackUserId,
-      name: rel.contact.displayName,
-      realName: rel.contact.realName,
-      avatar: rel.contact.avatar,
-      title: rel.contact.profile?.title,
-      department: rel.contact.profile?.department,
-      relationshipType: rel.relationshipType,
-      lastInteraction: rel.lastInteraction,
-      interactionCount: rel.interactionCount,
-      sharedChannels: rel.sharedChannels,
-      sharedInterests: rel.sharedInterests,
-      notes: rel.notes,
-      tags: rel.tags,
-      addedVia: rel.addedVia,
-      addedAt: rel.addedAt
-    }));
+    const nodes = relationships.map(rel => {
+      const contact = rel.contact || rel.contactId || {};
+      return {
+        id: contact.slackUserId || `unknown-${Math.random()}`,
+        name: contact.displayName || contact.realName || 'Unknown',
+        realName: contact.realName || contact.displayName || 'Unknown',
+        avatar: contact.avatar,
+        title: contact.profile?.title || '',
+        department: contact.profile?.department || '',
+        relationshipType: rel.relationshipType,
+        lastInteraction: rel.lastInteraction,
+        interactionCount: rel.interactionCount || 0,
+        sharedChannels: rel.sharedChannels || [],
+        sharedInterests: rel.sharedInterests || [],
+        notes: rel.notes,
+        tags: rel.tags || [],
+        addedVia: rel.addedVia,
+        addedAt: rel.addedAt
+      };
+    });
 
     // Add current user as center node
     nodes.unshift({
@@ -64,12 +67,15 @@ const RelationshipMap = () => {
     });
 
     // Create links from current user to all contacts
-    const links = relationships.map(rel => ({
-      source: 'current-user',
-      target: rel.contact.slackUserId,
-      relationshipType: rel.relationshipType,
-      addedVia: rel.addedVia
-    }));
+    const links = relationships.map(rel => {
+      const contact = rel.contact || rel.contactId || {};
+      return {
+        source: 'current-user',
+        target: contact.slackUserId || `unknown-${Math.random()}`,
+        relationshipType: rel.relationshipType,
+        addedVia: rel.addedVia
+      };
+    });
 
     return { nodes, links };
   }, [relationships]);
@@ -112,7 +118,9 @@ const RelationshipMap = () => {
   const handleNodeHover = useCallback((node, event) => {
     if (node.isCenter) return;
     setHoveredNode(node);
-    setHoverPosition({ x: event.clientX, y: event.clientY });
+    if (event && event.clientX !== undefined && event.clientY !== undefined) {
+      setHoverPosition({ x: event.clientX, y: event.clientY });
+    }
   }, []);
 
   const handleNodeUnhover = useCallback(() => {
