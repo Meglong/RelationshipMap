@@ -129,14 +129,6 @@ const RelationshipMap = () => {
     if (!node || node.isCenter) return;
     setHoveredNode(node);
     
-    console.log('Node hover event:', { 
-      nodeName: node.name, 
-      hasEvent: !!event, 
-      eventType: event?.type,
-      nodePosition: { x: node.x, y: node.y },
-      eventKeys: event ? Object.keys(event) : null
-    });
-    
     // Try to get node's screen coordinates from the ForceGraph
     let x = mousePosition.x + 15;
     let y = mousePosition.y + 10;
@@ -148,15 +140,10 @@ const RelationshipMap = () => {
         if (screenCoords) {
           x = screenCoords.x + 15;
           y = screenCoords.y + 10;
-          console.log('Using node screen coordinates:', { nodeX: node.x, nodeY: node.y, screenX: screenCoords.x, screenY: screenCoords.y });
-        } else {
-          console.log('getScreenCoords returned null, using tracked mouse position');
         }
       } catch (error) {
-        console.log('Error getting screen coordinates, using tracked mouse position:', error);
+        // Fall back to tracked mouse position if conversion fails
       }
-    } else {
-      console.log('No valid node coordinates or fgRef, using tracked mouse position');
     }
     
     // Apply boundary checks
@@ -174,7 +161,6 @@ const RelationshipMap = () => {
     x = Math.max(padding, x);
     y = Math.max(padding, y);
     
-    console.log('Final position:', { x, y });
     setHoverPosition({ x, y });
   }, [mousePosition.x, mousePosition.y]);
 
