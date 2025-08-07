@@ -195,14 +195,14 @@ const RelationshipMap = () => {
     if (node.isCenter) return '#1E40AF'; // Same darker blue as heavy connection lines
     
     const colors = {
-      team_member: '#3B82F6',
-      direct_report: '#10B981',
-      manager: '#8B5CF6',
-      colleague: '#10B981', // Green from dashboard
-      leader: '#F59E0B',
-      mentee: '#F97316',
-      friend: '#EC4899',
-      custom: '#6366F1'
+      team_member: '#FF7F7F', // Coral color
+      direct_report: '#10B981', // Green
+      manager: '#8B5CF6', // Purple
+      colleague: '#6B7280', // Gray
+      leader: '#F59E0B', // Orange/Yellow
+      mentee: '#F97316', // Orange
+      friend: '#EC4899', // Pink
+      custom: '#6366F1' // Indigo
     };
     
     return colors[node.relationshipType] || '#6B7280';

@@ -7,7 +7,7 @@ import {
   Users, 
   Plus, 
   MessageCircle, 
-  TrendingUp,
+  TrendingUp, 
   Search,
   X,
   Check,
@@ -593,8 +593,8 @@ const Dashboard = () => {
                           </p>
                         </div>
                       </div>
-                    ))}
-                  </div>
+            ))}
+          </div>
                   {recentDMs.length > 6 && (
                     <p className="text-sm text-gray-500 text-center mt-3">
                       And {recentDMs.length - 6} more contacts...
@@ -672,14 +672,15 @@ const Dashboard = () => {
                     <div className="mb-2">
                       <span className={`inline-flex items-center px-2 py-1 rounded text-xs font-medium ${
                         relationship.relationshipType === 'manager' ? 'bg-purple-100 text-purple-800' :
-                        relationship.relationshipType === 'direct_report' ? 'bg-blue-100 text-blue-800' :
-                        relationship.relationshipType === 'team_member' ? 'bg-green-100 text-green-800' :
+                        relationship.relationshipType === 'direct_report' ? 'bg-green-100 text-green-800' :
+                        relationship.relationshipType === 'team_member' ? 'bg-red-100 text-red-600' :
                         relationship.relationshipType === 'colleague' ? 'bg-gray-100 text-gray-800' :
                         relationship.relationshipType === 'leader' ? 'bg-yellow-100 text-yellow-800' :
                         relationship.relationshipType === 'mentee' ? 'bg-orange-100 text-orange-800' :
+                        relationship.relationshipType === 'friend' ? 'bg-pink-100 text-pink-800' :
                         'bg-indigo-100 text-indigo-800'
                       }`}>
-                        {relationship.relationshipType.replace('_', ' ')}
+                      {relationship.relationshipType.replace('_', ' ')}
                       </span>
                     </div>
 
