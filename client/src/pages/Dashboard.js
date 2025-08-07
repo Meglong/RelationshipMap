@@ -178,7 +178,7 @@ const Dashboard = () => {
     { value: 'team_member', label: 'Team Member' },
     { value: 'direct_report', label: 'Direct Report' },
     { value: 'manager', label: 'Manager' },
-    { value: 'mentor', label: 'Mentor' },
+                    { value: 'leader', label: 'Leader' },
     { value: 'mentee', label: 'Mentee' },
     { value: 'friend', label: 'Friend' },
     { value: 'custom', label: 'Custom' }
@@ -675,7 +675,7 @@ const Dashboard = () => {
                         relationship.relationshipType === 'direct_report' ? 'bg-blue-100 text-blue-800' :
                         relationship.relationshipType === 'team_member' ? 'bg-green-100 text-green-800' :
                         relationship.relationshipType === 'colleague' ? 'bg-gray-100 text-gray-800' :
-                        relationship.relationshipType === 'mentor' ? 'bg-yellow-100 text-yellow-800' :
+                        relationship.relationshipType === 'leader' ? 'bg-yellow-100 text-yellow-800' :
                         relationship.relationshipType === 'mentee' ? 'bg-orange-100 text-orange-800' :
                         'bg-indigo-100 text-indigo-800'
                       }`}>

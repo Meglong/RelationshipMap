@@ -482,7 +482,7 @@ const demoRelationships = [
     userId: 'U1234567890',
     teamId: 'T1234567890',
     contactId: 'U1234567893', // Lisa Wang
-    relationshipType: 'mentor',
+    relationshipType: 'leader',
     addedVia: 'manual',
     sharedChannels: [
       { channelId: 'C1234567890', channelName: 'general', isPrivate: false },
@@ -594,7 +594,7 @@ const demoRelationships = [
     userId: 'U1234567890',
     teamId: 'T1234567890',
     contactId: 'U1234567900', // Robert Lee
-    relationshipType: 'mentor',
+    relationshipType: 'leader',
     addedVia: 'manual',
     sharedChannels: [
       { channelId: 'C1234567890', channelName: 'general', isPrivate: false },
@@ -722,7 +722,7 @@ const demoRelationships = [
     userId: 'U1234567890',
     teamId: 'T1234567890',
     contactId: 'U1234567908', // Michael Thompson
-    relationshipType: 'mentor',
+    relationshipType: 'leader',
     addedVia: 'manual',
     sharedChannels: [
       { channelId: 'C1234567890', channelName: 'general', isPrivate: false },

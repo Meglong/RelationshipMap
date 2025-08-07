@@ -199,7 +199,7 @@ const RelationshipMap = () => {
       direct_report: '#10B981',
       manager: '#8B5CF6',
       colleague: '#10B981', // Green from dashboard
-      mentor: '#F59E0B',
+      leader: '#F59E0B',
       mentee: '#F97316',
       friend: '#EC4899',
       custom: '#6366F1'
@@ -343,7 +343,7 @@ const RelationshipMap = () => {
               <option value="direct_report">Direct Report</option>
               <option value="manager">Manager</option>
               <option value="colleague">Colleague</option>
-              <option value="mentor">Mentor</option>
+                              <option value="leader">Leader</option>
               <option value="mentee">Mentee</option>
               <option value="friend">Friend</option>
               <option value="custom">Custom</option>
