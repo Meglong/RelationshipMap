@@ -179,7 +179,6 @@ const RelationshipMap = () => {
           // Get the current D3 simulation
           const simulation = fg.d3Force('link');
           if (simulation) {
-            console.log('Setting up custom link distances...');
             simulation.distance(getLinkDistance);
             // Restart the simulation to apply new distances
             fg.d3ReheatSimulation();
@@ -255,40 +254,24 @@ const RelationshipMap = () => {
     return '#94A3B8';
   };
 
-    // Function to get link distance based on interaction recency
+  // Function to get link distance based on interaction recency
   const getLinkDistance = (link) => {
-    if (!link || !link.source || !link.target) {
-      console.log('getLinkDistance: Invalid link', link);
-      return 200;
-    }
+    if (!link || !link.source || !link.target) return 200;
 
     // The target is the node object itself, which contains lastInteraction
     const targetNode = link.target;
-    if (!targetNode || !targetNode.lastInteraction) {
-      console.log('getLinkDistance: No target or lastInteraction', targetNode);
-      return 300;
-    }
+    if (!targetNode || !targetNode.lastInteraction) return 300;
 
     const lastInteraction = new Date(targetNode.lastInteraction);
     const now = new Date();
     const daysDiff = (now - lastInteraction) / (1000 * 60 * 60 * 24);
 
-    let distance;
     // Recent interactions: closer to center (shorter links)
-    if (daysDiff <= 30) {
-      distance = 120;
-      console.log(`getLinkDistance: Recent (${Math.round(daysDiff)} days) - distance ${distance}`, targetNode.name);
-    } else if (daysDiff <= 180) {
-      // Medium interactions: medium distance
-      distance = 200;
-      console.log(`getLinkDistance: Medium (${Math.round(daysDiff)} days) - distance ${distance}`, targetNode.name);
-    } else {
-      // Old interactions: farther from center (longer links)
-      distance = 300;
-      console.log(`getLinkDistance: Old (${Math.round(daysDiff)} days) - distance ${distance}`, targetNode.name);
-    }
-
-    return distance;
+    if (daysDiff <= 30) return 120;
+    // Medium interactions: medium distance  
+    if (daysDiff <= 180) return 200;
+    // Old interactions: farther from center (longer links)
+    return 300;
   };
 
   const formatDate = (dateString) => {
