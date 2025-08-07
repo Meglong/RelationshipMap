@@ -192,13 +192,13 @@ const RelationshipMap = () => {
 
   const getNodeColor = (node) => {
     if (!node) return '#6B7280';
-    if (node.isCenter) return '#4A154B';
+    if (node.isCenter) return '#1E40AF'; // Same darker blue as heavy connection lines
     
     const colors = {
       team_member: '#3B82F6',
       direct_report: '#10B981',
       manager: '#8B5CF6',
-      colleague: '#6B7280',
+      colleague: '#10B981', // Green from dashboard
       mentor: '#F59E0B',
       mentee: '#F97316',
       friend: '#EC4899',
