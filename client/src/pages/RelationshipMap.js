@@ -117,7 +117,35 @@ const RelationshipMap = () => {
   const handleNodeHover = useCallback((node, event) => {
     if (!node || node.isCenter) return;
     setHoveredNode(node);
-    if (event && event.clientX !== undefined && event.clientY !== undefined) {
+    
+    // Use node position instead of mouse position for better positioning
+    if (node.x !== undefined && node.y !== undefined && fgRef.current) {
+      try {
+        // Get the canvas element and its bounding rect
+        const canvas = fgRef.current.renderer().domElement;
+        const rect = canvas.getBoundingClientRect();
+        
+        // Convert node coordinates to screen coordinates
+        const screenX = rect.left + node.x + canvas.width / 2;
+        const screenY = rect.top + node.y + canvas.height / 2;
+        
+        // Ensure the hover card stays within viewport bounds
+        const cardWidth = 300; // max-w-xs is approximately 300px
+        const cardHeight = 200; // estimated height
+        const padding = 10;
+        
+        const adjustedX = Math.max(padding, Math.min(window.innerWidth - cardWidth - padding, screenX - cardWidth / 2));
+        const adjustedY = Math.max(padding, Math.min(window.innerHeight - cardHeight - padding, screenY + 30));
+        
+        setHoverPosition({ x: adjustedX, y: adjustedY });
+      } catch (error) {
+        // Fallback to mouse position if there's any error
+        if (event && event.clientX !== undefined && event.clientY !== undefined) {
+          setHoverPosition({ x: event.clientX, y: event.clientY });
+        }
+      }
+    } else if (event && event.clientX !== undefined && event.clientY !== undefined) {
+      // Fallback to mouse position if node coordinates aren't available
       setHoverPosition({ x: event.clientX, y: event.clientY });
     }
   }, []);
@@ -289,8 +317,8 @@ const RelationshipMap = () => {
         <div
           className="fixed z-50 bg-white rounded-lg shadow-lg border border-gray-200 p-4 max-w-xs"
           style={{
-            left: hoverPosition.x + 10,
-            top: hoverPosition.y - 10,
+            left: hoverPosition.x,
+            top: hoverPosition.y,
             pointerEvents: 'none'
           }}
         >
