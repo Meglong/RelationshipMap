@@ -113,9 +113,11 @@ const RelationshipMap = () => {
     });
 
     const filteredNodeIds = new Set(filteredNodes.map(n => n.id));
-    const filteredLinks = graphData.links.filter(link => 
-      filteredNodeIds.has(link.source) && filteredNodeIds.has(link.target)
-    );
+    const filteredLinks = graphData.links.filter(link => {
+      // Keep links where both nodes are in the filtered set
+      // This ensures we keep connections between the center user and filtered nodes
+      return filteredNodeIds.has(link.source) && filteredNodeIds.has(link.target);
+    });
 
     return { nodes: filteredNodes, links: filteredLinks };
   }, [graphData, filters]);
