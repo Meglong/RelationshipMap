@@ -196,35 +196,31 @@ const RelationshipMap = () => {
   const getLinkWidth = (link) => {
     if (!link || !link.source || !link.target) return 1;
     
-    // Find the relationship data for this link
-    const relationship = relationships?.find(rel => {
-      const contact = rel.contact || rel.contactId || {};
-      return contact.slackUserId === link.target;
-    });
-    
-    if (!relationship || !relationship.lastInteraction) {
-      console.log('No relationship or lastInteraction found for link:', link.target);
+    // The target is the node object itself, which contains lastInteraction
+    const targetNode = link.target;
+    if (!targetNode || !targetNode.lastInteraction) {
+      console.log('No lastInteraction found for link target:', targetNode?.name || 'unknown');
       return 1;
     }
     
-    const lastInteraction = new Date(relationship.lastInteraction);
+    const lastInteraction = new Date(targetNode.lastInteraction);
     const now = new Date();
     const daysDiff = (now - lastInteraction) / (1000 * 60 * 60 * 24);
     
-    console.log(`Link ${link.target}: lastInteraction=${lastInteraction}, daysDiff=${daysDiff}`);
+    console.log(`Link ${targetNode.name}: lastInteraction=${lastInteraction}, daysDiff=${daysDiff}`);
     
     // Heavy weight: within last month (30 days)
     if (daysDiff <= 30) {
-      console.log(`Heavy weight for ${link.target}`);
+      console.log(`Heavy weight for ${targetNode.name}`);
       return 4;
     }
     // Medium weight: within last 6 months (180 days)
     if (daysDiff <= 180) {
-      console.log(`Medium weight for ${link.target}`);
+      console.log(`Medium weight for ${targetNode.name}`);
       return 2;
     }
     // Light weight: older than 6 months
-    console.log(`Light weight for ${link.target}`);
+    console.log(`Light weight for ${targetNode.name}`);
     return 1;
   };
 
@@ -232,15 +228,11 @@ const RelationshipMap = () => {
   const getLinkColor = (link) => {
     if (!link || !link.source || !link.target) return '#E5E7EB';
     
-    // Find the relationship data for this link
-    const relationship = relationships?.find(rel => {
-      const contact = rel.contact || rel.contactId || {};
-      return contact.slackUserId === link.target;
-    });
+    // The target is the node object itself, which contains lastInteraction
+    const targetNode = link.target;
+    if (!targetNode || !targetNode.lastInteraction) return '#E5E7EB';
     
-    if (!relationship || !relationship.lastInteraction) return '#E5E7EB';
-    
-    const lastInteraction = new Date(relationship.lastInteraction);
+    const lastInteraction = new Date(targetNode.lastInteraction);
     const now = new Date();
     const daysDiff = (now - lastInteraction) / (1000 * 60 * 60 * 24);
     
