@@ -192,6 +192,54 @@ const RelationshipMap = () => {
     return node.interactionCount > 10 ? 6 : 4;
   };
 
+  // Function to get link width based on interaction recency
+  const getLinkWidth = (link) => {
+    if (!link || !link.source || !link.target) return 1;
+    
+    // Find the relationship data for this link
+    const relationship = relationships?.find(rel => {
+      const contact = rel.contact || rel.contactId || {};
+      return contact.slackUserId === link.target;
+    });
+    
+    if (!relationship || !relationship.lastInteraction) return 1;
+    
+    const lastInteraction = new Date(relationship.lastInteraction);
+    const now = new Date();
+    const daysDiff = (now - lastInteraction) / (1000 * 60 * 60 * 24);
+    
+    // Heavy weight: within last month (30 days)
+    if (daysDiff <= 30) return 4;
+    // Medium weight: within last 6 months (180 days)
+    if (daysDiff <= 180) return 2;
+    // Light weight: older than 6 months
+    return 1;
+  };
+
+  // Function to get link color based on interaction recency
+  const getLinkColor = (link) => {
+    if (!link || !link.source || !link.target) return '#E5E7EB';
+    
+    // Find the relationship data for this link
+    const relationship = relationships?.find(rel => {
+      const contact = rel.contact || rel.contactId || {};
+      return contact.slackUserId === link.target;
+    });
+    
+    if (!relationship || !relationship.lastInteraction) return '#E5E7EB';
+    
+    const lastInteraction = new Date(relationship.lastInteraction);
+    const now = new Date();
+    const daysDiff = (now - lastInteraction) / (1000 * 60 * 60 * 24);
+    
+    // Strong connection: within last month (darker blue)
+    if (daysDiff <= 30) return '#1E40AF';
+    // Medium connection: within last 6 months (medium blue)
+    if (daysDiff <= 180) return '#3B82F6';
+    // Weak connection: older than 6 months (light gray)
+    return '#94A3B8';
+  };
+
   const formatDate = (dateString) => {
     if (!dateString) return 'No recent interaction';
     const date = new Date(dateString);
@@ -295,8 +343,8 @@ const RelationshipMap = () => {
             nodeLabel={(node) => node ? node.name : ''}
             nodeColor={getNodeColor}
             nodeVal={getNodeSize}
-            linkColor="#94A3B8"
-            linkWidth={2}
+            linkColor={getLinkColor}
+            linkWidth={getLinkWidth}
             linkOpacity={0.6}
             onNodeClick={handleNodeClick}
             onNodeHover={handleNodeHover}
