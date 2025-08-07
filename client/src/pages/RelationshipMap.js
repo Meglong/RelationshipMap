@@ -129,48 +129,34 @@ const RelationshipMap = () => {
     if (!node || node.isCenter) return;
     setHoveredNode(node);
     
-    // Set a default position away from top-left corner if no valid event
-    const defaultX = 200;
-    const defaultY = 200;
-    
     console.log('Node hover event:', { 
       nodeName: node.name, 
       hasEvent: !!event, 
       eventType: event?.type,
-      clientX: event?.clientX, 
-      clientY: event?.clientY,
+      nodePosition: { x: node.x, y: node.y },
       eventKeys: event ? Object.keys(event) : null
     });
     
-    // Try multiple ways to get mouse coordinates
-    let x = defaultX;
-    let y = defaultY;
+    // Try to get node's screen coordinates from the ForceGraph
+    let x = mousePosition.x + 15;
+    let y = mousePosition.y + 10;
     
-    if (event) {
-      // Try different properties that might have coordinates
-      if (event.clientX !== undefined && event.clientY !== undefined) {
-        x = event.clientX + 15;
-        y = event.clientY + 10;
-        console.log('Using clientX/Y:', { x, y });
-      } else if (event.pageX !== undefined && event.pageY !== undefined) {
-        x = event.pageX + 15;
-        y = event.pageY + 10;
-        console.log('Using pageX/Y:', { x, y });
-      } else if (event.screenX !== undefined && event.screenY !== undefined) {
-        x = event.screenX + 15;
-        y = event.screenY + 10;
-        console.log('Using screenX/Y:', { x, y });
-      } else {
-        // Use tracked mouse position as fallback
-        x = mousePosition.x + 15;
-        y = mousePosition.y + 10;
-        console.log('No coordinate properties found, using tracked mouse position:', { x, y });
+    if (fgRef.current && node.x !== undefined && node.y !== undefined) {
+      try {
+        // Convert node coordinates to screen coordinates
+        const screenCoords = fgRef.current.getScreenCoords(node.x, node.y);
+        if (screenCoords) {
+          x = screenCoords.x + 15;
+          y = screenCoords.y + 10;
+          console.log('Using node screen coordinates:', { nodeX: node.x, nodeY: node.y, screenX: screenCoords.x, screenY: screenCoords.y });
+        } else {
+          console.log('getScreenCoords returned null, using tracked mouse position');
+        }
+      } catch (error) {
+        console.log('Error getting screen coordinates, using tracked mouse position:', error);
       }
     } else {
-      // Use tracked mouse position as fallback
-      x = mousePosition.x + 15;
-      y = mousePosition.y + 10;
-      console.log('No event object, using tracked mouse position:', { x, y });
+      console.log('No valid node coordinates or fgRef, using tracked mouse position');
     }
     
     // Apply boundary checks
@@ -190,7 +176,7 @@ const RelationshipMap = () => {
     
     console.log('Final position:', { x, y });
     setHoverPosition({ x, y });
-  }, []);
+  }, [mousePosition.x, mousePosition.y]);
 
   const handleNodeUnhover = useCallback(() => {
     setHoveredNode(null);
