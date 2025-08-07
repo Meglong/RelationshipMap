@@ -8,7 +8,8 @@ import LoadingSpinner from '../components/LoadingSpinner';
 const RelationshipMap = () => {
   const [selectedNode, setSelectedNode] = useState(null);
   const [hoveredNode, setHoveredNode] = useState(null);
-  const [hoverPosition, setHoverPosition] = useState({ x: 0, y: 0 });
+  const [hoverPosition, setHoverPosition] = useState({ x: 200, y: 200 });
+  const [mousePosition, setMousePosition] = useState({ x: 200, y: 200 });
   const [filters, setFilters] = useState({
     relationshipType: 'all',
     hasRecentInteraction: false,
@@ -16,6 +17,16 @@ const RelationshipMap = () => {
   });
   
   const fgRef = useRef();
+
+  // Track mouse position for hover card positioning
+  React.useEffect(() => {
+    const handleMouseMove = (e) => {
+      setMousePosition({ x: e.clientX, y: e.clientY });
+    };
+    
+    document.addEventListener('mousemove', handleMouseMove);
+    return () => document.removeEventListener('mousemove', handleMouseMove);
+  }, []);
 
   const { data: relationships, isLoading } = useQuery(
     'relationships',
@@ -118,35 +129,67 @@ const RelationshipMap = () => {
     if (!node || node.isCenter) return;
     setHoveredNode(node);
     
-    console.log('Node hover:', { node: node.name, event, clientX: event?.clientX, clientY: event?.clientY });
+    // Set a default position away from top-left corner if no valid event
+    const defaultX = 200;
+    const defaultY = 200;
     
-    // Use mouse position as it's more reliable for positioning
-    if (event && event.clientX !== undefined && event.clientY !== undefined) {
-      // Position the card to the right and slightly below the cursor
-      const cardWidth = 300; // max-w-xs is approximately 300px
-      const cardHeight = 200; // estimated height
-      const padding = 10;
-      
-      let x = event.clientX + 15; // Offset to the right of cursor
-      let y = event.clientY + 10; // Offset below cursor
-      
-      // Ensure the hover card stays within viewport bounds
-      if (x + cardWidth > window.innerWidth - padding) {
-        x = event.clientX - cardWidth - 15; // Show to the left instead
+    console.log('Node hover event:', { 
+      nodeName: node.name, 
+      hasEvent: !!event, 
+      eventType: event?.type,
+      clientX: event?.clientX, 
+      clientY: event?.clientY,
+      eventKeys: event ? Object.keys(event) : null
+    });
+    
+    // Try multiple ways to get mouse coordinates
+    let x = defaultX;
+    let y = defaultY;
+    
+    if (event) {
+      // Try different properties that might have coordinates
+      if (event.clientX !== undefined && event.clientY !== undefined) {
+        x = event.clientX + 15;
+        y = event.clientY + 10;
+        console.log('Using clientX/Y:', { x, y });
+      } else if (event.pageX !== undefined && event.pageY !== undefined) {
+        x = event.pageX + 15;
+        y = event.pageY + 10;
+        console.log('Using pageX/Y:', { x, y });
+      } else if (event.screenX !== undefined && event.screenY !== undefined) {
+        x = event.screenX + 15;
+        y = event.screenY + 10;
+        console.log('Using screenX/Y:', { x, y });
+      } else {
+        // Use tracked mouse position as fallback
+        x = mousePosition.x + 15;
+        y = mousePosition.y + 10;
+        console.log('No coordinate properties found, using tracked mouse position:', { x, y });
       }
-      if (y + cardHeight > window.innerHeight - padding) {
-        y = event.clientY - cardHeight - 10; // Show above instead
-      }
-      
-      // Ensure minimum padding from edges
-      x = Math.max(padding, x);
-      y = Math.max(padding, y);
-      
-      console.log('Setting hover position:', { x, y });
-      setHoverPosition({ x, y });
     } else {
-      console.log('No valid event coordinates');
+      // Use tracked mouse position as fallback
+      x = mousePosition.x + 15;
+      y = mousePosition.y + 10;
+      console.log('No event object, using tracked mouse position:', { x, y });
     }
+    
+    // Apply boundary checks
+    const cardWidth = 300;
+    const cardHeight = 200;
+    const padding = 10;
+    
+    if (x + cardWidth > window.innerWidth - padding) {
+      x = Math.max(padding, x - cardWidth - 30);
+    }
+    if (y + cardHeight > window.innerHeight - padding) {
+      y = Math.max(padding, y - cardHeight - 20);
+    }
+    
+    x = Math.max(padding, x);
+    y = Math.max(padding, y);
+    
+    console.log('Final position:', { x, y });
+    setHoverPosition({ x, y });
   }, []);
 
   const handleNodeUnhover = useCallback(() => {
