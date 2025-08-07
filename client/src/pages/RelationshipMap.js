@@ -455,7 +455,16 @@ const RelationshipMap = () => {
               </div>
             )}
             
-            <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium relationship-${hoveredNode.relationshipType}`}>
+            <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
+              hoveredNode.relationshipType === 'manager' ? 'bg-purple-100 text-purple-800' :
+              hoveredNode.relationshipType === 'direct_report' ? 'bg-blue-100 text-blue-800' :
+              hoveredNode.relationshipType === 'team_member' ? 'bg-red-100 text-red-600' :
+              hoveredNode.relationshipType === 'colleague' ? 'bg-green-100 text-green-800' :
+              hoveredNode.relationshipType === 'leader' ? 'bg-yellow-100 text-yellow-800' :
+              hoveredNode.relationshipType === 'mentee' ? 'bg-orange-100 text-orange-800' :
+              hoveredNode.relationshipType === 'friend' ? 'bg-pink-100 text-pink-800' :
+              'bg-indigo-100 text-indigo-800'
+            }`}>
               {hoveredNode.relationshipType.replace('_', ' ')}
             </span>
           </div>
@@ -494,7 +503,16 @@ const RelationshipMap = () => {
               <div className="space-y-3">
                 <div className="flex justify-between">
                   <span className="text-gray-600">Type:</span>
-                  <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium relationship-${selectedNode.relationshipType}`}>
+                  <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                    selectedNode.relationshipType === 'manager' ? 'bg-purple-100 text-purple-800' :
+                    selectedNode.relationshipType === 'direct_report' ? 'bg-blue-100 text-blue-800' :
+                    selectedNode.relationshipType === 'team_member' ? 'bg-red-100 text-red-600' :
+                    selectedNode.relationshipType === 'colleague' ? 'bg-green-100 text-green-800' :
+                    selectedNode.relationshipType === 'leader' ? 'bg-yellow-100 text-yellow-800' :
+                    selectedNode.relationshipType === 'mentee' ? 'bg-orange-100 text-orange-800' :
+                    selectedNode.relationshipType === 'friend' ? 'bg-pink-100 text-pink-800' :
+                    'bg-indigo-100 text-indigo-800'
+                  }`}>
                     {selectedNode.relationshipType.replace('_', ' ')}
                   </span>
                 </div>
