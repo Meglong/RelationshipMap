@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { useQuery } from 'react-query';
 import ForceGraph2D from 'react-force-graph-2d';
 import { MessageCircle, Tag, X } from 'lucide-react';
@@ -168,6 +168,29 @@ const RelationshipMap = () => {
     setHoveredNode(null);
   }, []);
 
+  // Configure custom link distances using D3 force simulation
+  useEffect(() => {
+    if (fgRef.current && filteredGraphData.links.length > 0) {
+      const fg = fgRef.current;
+      
+      // Wait for the graph to be fully initialized
+      setTimeout(() => {
+        try {
+          // Get the current D3 simulation
+          const simulation = fg.d3Force('link');
+          if (simulation) {
+            console.log('Setting up custom link distances...');
+            simulation.distance(getLinkDistance);
+            // Restart the simulation to apply new distances
+            fg.d3ReheatSimulation();
+          }
+        } catch (error) {
+          console.log('Could not configure link distances:', error);
+        }
+      }, 100);
+    }
+  }, [filteredGraphData.links.length]);
+
   const getNodeColor = (node) => {
     if (!node) return '#6B7280';
     if (node.isCenter) return '#4A154B';
@@ -232,24 +255,40 @@ const RelationshipMap = () => {
     return '#94A3B8';
   };
 
-  // Function to get link distance based on interaction recency
+    // Function to get link distance based on interaction recency
   const getLinkDistance = (link) => {
-    if (!link || !link.source || !link.target) return 200;
-    
+    if (!link || !link.source || !link.target) {
+      console.log('getLinkDistance: Invalid link', link);
+      return 200;
+    }
+
     // The target is the node object itself, which contains lastInteraction
     const targetNode = link.target;
-    if (!targetNode || !targetNode.lastInteraction) return 300;
-    
+    if (!targetNode || !targetNode.lastInteraction) {
+      console.log('getLinkDistance: No target or lastInteraction', targetNode);
+      return 300;
+    }
+
     const lastInteraction = new Date(targetNode.lastInteraction);
     const now = new Date();
     const daysDiff = (now - lastInteraction) / (1000 * 60 * 60 * 24);
-    
+
+    let distance;
     // Recent interactions: closer to center (shorter links)
-    if (daysDiff <= 30) return 120;
-    // Medium interactions: medium distance
-    if (daysDiff <= 180) return 200;
-    // Old interactions: farther from center (longer links)
-    return 300;
+    if (daysDiff <= 30) {
+      distance = 120;
+      console.log(`getLinkDistance: Recent (${Math.round(daysDiff)} days) - distance ${distance}`, targetNode.name);
+    } else if (daysDiff <= 180) {
+      // Medium interactions: medium distance
+      distance = 200;
+      console.log(`getLinkDistance: Medium (${Math.round(daysDiff)} days) - distance ${distance}`, targetNode.name);
+    } else {
+      // Old interactions: farther from center (longer links)
+      distance = 300;
+      console.log(`getLinkDistance: Old (${Math.round(daysDiff)} days) - distance ${distance}`, targetNode.name);
+    }
+
+    return distance;
   };
 
   const formatDate = (dateString) => {
@@ -372,12 +411,7 @@ const RelationshipMap = () => {
             onNodeHover={handleNodeHover}
             onNodeUnhover={handleNodeUnhover}
             cooldownTicks={100}
-            d3Force={{
-              link: {
-                distance: getLinkDistance,
-                strength: 0.5
-              }
-            }}
+
             nodeCanvasObject={(node, ctx, globalScale) => {
               if (!node || !node.name || !ctx) return;
               
