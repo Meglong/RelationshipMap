@@ -1,0 +1,96 @@
+```mermaid
+
+erDiagram
+    ACCOUNT ||--o{ PROPERTY__C : manages
+    PROPERTY__C ||--o{ UNIT__C : has
+    UNIT__C ||--o{ LEASE__C : has
+    LEASE__C ||--o{ LEASEPARTY__C : includes
+    CONTACT ||--o{ LEASEPARTY__C : participates
+
+    UNIT__C ||--o{ UNITRATE__C : priced_by
+
+    UNIT__C ||--o{ WORKORDER : serviced_by
+    PROPERTY__C ||--o{ WORKORDER : relates_to
+    LEASE__C ||--o{ WORKORDER : during
+    CONTACT ||--o{ WORKORDER : requests
+
+    UNIT__C ||--o{ LISTING__C : published_as
+    PROPERTY__C ||--o{ LISTING__C : published_as
+
+    ACCOUNT {
+        string Name
+        string Type
+    }
+
+    CONTACT {
+        string FirstName
+        string LastName
+        string Email
+    }
+
+    PROPERTY__C {
+        string Name
+        string PropertyType__c
+        string Status__c
+        string Street__c
+        string City__c
+        string State__c
+        string PostalCode__c
+        string ManagementCompany__c
+        string OwnerAccount__c
+    }
+
+    UNIT__C {
+        string Name
+        string UnitNumber__c
+        string UnitType__c
+        int Beds__c
+        int Baths__c
+        int SqFt__c
+        string CurrentStatus__c
+        date ReadyDate__c
+    }
+
+    LEASE__C {
+        string Name
+        date LeaseStartDate__c
+        date LeaseEndDate__c
+        string LeaseStatus__c
+        float RentAmount__c
+        float SecurityDeposit__c
+        date MoveInDate__c
+        date MoveOutDate__c
+    }
+
+    LEASEPARTY__C {
+        string Name
+        string Role__c
+        boolean IsPrimary__c
+        date StartDate__c
+        date EndDate__c
+    }
+
+    UNITRATE__C {
+        string Name
+        string RateType__c
+        float Amount__c
+        date EffectiveStart__c
+        date EffectiveEnd__c
+    }
+
+    WORKORDER {
+        string Subject
+        string Status
+        string Priority
+    }
+
+    LISTING__C {
+        string Name
+        string ListingStatus__c
+        string Channel__c
+        date PublishStart__c
+        date PublishEnd__c
+        string PublicURL__c
+    }
+
+```
