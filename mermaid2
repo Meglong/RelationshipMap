@@ -1,0 +1,57 @@
+```mermaid
+erDiagram
+  ACCOUNT ||--o{ PROPERTY__C : "Owner_Account__c"
+  ACCOUNT ||--o{ LEASE__C : "Account__c (tenant org)"
+  ACCOUNT ||--o{ PAYMENT__C : "Account__c (payer)"
+  PROPERTY__C ||--o{ LEASE__C : "Property__c"
+  PROPERTY__C ||--o{ PAYMENT__C : "denorm: Property__c"
+  LEASE__C ||--o{ PAYMENT__C : "Lease__c"
+
+  ACCOUNT {
+    Id Id PK
+    Name Text
+    RecordType Text
+  }
+
+  PROPERTY__C {
+    Id Id PK
+    Name Text
+    Street__c Text
+    City__c Text
+    State__c Text
+    PostalCode__c Text
+    Country__c Text
+    Owner_Account__c Id FK
+    Primary_Photo_URL__c Text
+    Status__c Picklist
+  }
+
+  LEASE__C {
+    Id Id PK
+    Property__c Id FK
+    Account__c Id FK
+    Start_Date__c Date
+    End_Date__c Date
+    Monthly_Rent__c Currency
+    Payment_Day__c Number
+    Status__c Picklist
+  }
+
+  PAYMENT__C {
+    Id Id PK
+    Lease__c Id FK
+    Property__c Id FK  "denormalized"
+    Account__c Id FK
+    Amount_Due__c Currency
+    Amount_Paid__c Currency
+    Balance__c Formula
+    Due_DateTime__c Datetime
+    Paid_DateTime__c Datetime
+    Status__c Picklist
+    Is_High_Priority__c Formula
+    Display_Title__c Formula
+    Display_Date__c Formula
+  }
+
+
+```
